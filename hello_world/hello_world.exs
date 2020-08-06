@@ -18,45 +18,52 @@ defmodule HelloWorld do
       "" -> @englishHelloPrefix <> name
       @spanish -> @spanishHelloPrefix <> name
       @french -> @frenchHelloPrefix <> name
-
     end
   end
 end
 
-ExUnit.start()
+case System.argv() do
+  ["--test"] ->
+    ExUnit.start()
 
-defmodule HelloWorldTest do
-  use ExUnit.Case
+    defmodule HelloWorldTest do
+      use ExUnit.Case
 
-  import HelloWorld
+      import HelloWorld
 
-  defp assert_correct_message(got, want) do
-    assert want == got
-  end
+      defp correct_message(got, want) do
+        want == got
+      end
 
-  test "succes case - saying hello to people" do
-    want = hello_world("Bob")
-    got = "Hello, Bob"
+      test "succes case - saying hello to people" do
+        want = hello_world("Bob")
+        got = "Hello, Bob"
 
-    assert_correct_message(got, want)
-  end
+        assert correct_message(got, want) == true
+      end
 
-  test "say 'Hello, World' when an empty string is supplied" do
-    got = hello_world()
-    want = "Hello, World"
+      test "say 'Hello, World' when an empty string is supplied" do
+        got = hello_world()
+        want = "Hello, World"
 
-    assert_correct_message(got, want)
-  end
+        assert correct_message(got, want) == true
+      end
 
-  test "in Spanish" do
-    got = hello_world("Bob", "Spanish")
-    want = "Hola, Bob"
-    assert_correct_message(got, want)
-  end
+      test "in Spanish" do
+        got = hello_world("Bob", "Spanish")
+        want = "Hola, Bob"
 
-  test "in French" do
-    got = hello_world("Bob", "French")
-    want = "Bonjour, Bob"
-    assert_correct_message(got, want)
-  end
+        assert correct_message(got, want) == true
+      end
+
+      test "in French" do
+        got = hello_world("Bob", "French")
+        want = "Bonjour, Bob"
+
+        assert correct_message(got, want) == true
+      end
+    end
+
+  _ ->
+    IO.puts("Supply your command with --test flag")
 end
