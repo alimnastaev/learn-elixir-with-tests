@@ -1,24 +1,22 @@
 defmodule HelloWorld do
-  @englishHelloPrefix "Hello, "
-
-  @spanish "Spanish"
-  @spanishHelloPrefix "Hola, "
-
-  @french "French"
-  @frenchHelloPrefix "Bonjour, "
-
-  def hello_world(name \\ "", language \\ "") do
-    if name == "" && language == "",
-      do: @englishHelloPrefix <> "World",
-      else: language_selection(language, name)
+  def hello_world(name, language) do
+    language_selection(language, name)
   end
 
-  defp language_selection(language, name) do
-    case language do
-      "" -> @englishHelloPrefix <> name
-      @spanish -> @spanishHelloPrefix <> name
-      @french -> @frenchHelloPrefix <> name
-    end
+  def hello_world(name) do
+    "Hello, " <> name
+  end
+
+  def hello_world() do
+    "Hello, " <> "World"
+  end
+
+  defp language_selection("Spanish", name) do
+    "Hola, " <> name
+  end
+
+  defp language_selection("French", name) do
+    "Bonjour, " <> name
   end
 end
 
